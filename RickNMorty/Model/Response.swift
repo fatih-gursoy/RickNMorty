@@ -11,7 +11,7 @@ import Foundation
 struct Response: Codable {
     
     let info: Info?
-    let Characters: [Character]?
+    let results: [Character]?
 
 }
 

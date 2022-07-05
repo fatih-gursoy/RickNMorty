@@ -12,12 +12,13 @@ protocol EndPoint {
     var baseURL: String { get }
     var path: String { get }
     var queryItems: [URLQueryItem]? { get }
+    var url: URL { get }
     
 }
 
 enum API: EndPoint {
     
-    case character([QueryFilter])
+    case character([Params])
     
     var baseURL: String {
         return "https://rickandmortyapi.com/api"
@@ -28,8 +29,9 @@ enum API: EndPoint {
         switch self {
             
         case .character:
-            return "/character"
+            return "/api/character"
         }
+
     }
     
     var url : URL {
@@ -41,7 +43,6 @@ enum API: EndPoint {
         return url
         
     }
-    
     
     var queryItems: [URLQueryItem]? {
         
@@ -55,7 +56,7 @@ enum API: EndPoint {
     
 }
 
-enum QueryFilter {
+enum Params {
     
     case page(Int)
     case name(String)

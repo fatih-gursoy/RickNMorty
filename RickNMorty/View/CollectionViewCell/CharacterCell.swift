@@ -11,9 +11,17 @@ class CharacterCell: UICollectionViewCell {
 
     static let identifier = "CharacterCell"
     
-    func configureCell(viewModel: String) {
+    @IBOutlet weak private var name: UILabel!
+    @IBOutlet weak private var image: UIImageView!
+    @IBOutlet weak private var species: UILabel!
+    @IBOutlet weak private var status: UILabel!
+    
+    func configureCell(viewModel: CharacterViewModel) {
         
-        
+        name.text = viewModel.name
+        status.text = viewModel.status
+        species.text = viewModel.species
+        image.setImage(url: viewModel.image)
         
     }
     
