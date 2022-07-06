@@ -37,5 +37,27 @@ extension CharacterListViewModel {
             self?.delegate?.updateUI()
         }
     }
+    
+    func filterByName(pageNum: Int, name: String) {
+        
+        service.fetch(endPoint: API.character([.page(pageNum), .name(name)])) { [weak self] (response: Response) in
+            
+            guard let characters = response.results else { return }
+            self?.characters.append(contentsOf: characters)
+            self?.delegate?.updateUI()
+        }
+    }
+    
+    func filterByStatus(pageNum: Int, status: String) {
+        
+        service.fetch(endPoint: API.character([.page(pageNum), .status(status)])) { [weak self] (response: Response) in
+            
+            guard let characters = response.results else { return }
+            self?.characters.removeAll(keepingCapacity: false)
+            self?.characters = characters
+            self?.delegate?.updateUI()
+        }
+    }
+
 
 }

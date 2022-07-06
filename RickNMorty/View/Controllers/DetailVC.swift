@@ -30,6 +30,8 @@ class DetailVC: UIViewController {
         
     }
     
+
+    
     func configureUI() {
         
         guard let viewModel = viewModel else {return}

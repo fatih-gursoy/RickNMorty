@@ -86,7 +86,7 @@ class CharacterViewModel {
         }
     }
     
-    func addToFavorites(_ id: String){
+    func addToFavorites(_ id: String) {
         
         coreDataManager.addToFavorites(id)
         

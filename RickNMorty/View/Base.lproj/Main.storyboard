@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Rick and Morty Characters-->
+        <!--Rick and Morty-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="HomeVC" customModule="RickNMorty" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="LgZ-xh-u9l">
+                            <searchBar contentMode="redraw" placeholder="Search by name" translatesAutoresizingMaskIntoConstraints="NO" id="LgZ-xh-u9l">
                                 <rect key="frame" x="0.0" y="88" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -55,9 +55,10 @@
                             <constraint firstItem="LgZ-xh-u9l" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mCL-6i-FqQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Rick and Morty Characters" id="xvd-vm-ma2"/>
+                    <navigationItem key="navigationItem" title="Rick and Morty" id="xvd-vm-ma2"/>
                     <connections>
                         <outlet property="listCollectionView" destination="rmU-qo-jXv" id="swV-QY-Cp4"/>
+                        <outlet property="searchBar" destination="LgZ-xh-u9l" id="Vh2-Jg-BAT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -195,7 +196,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
                                 </subviews>
                                 <constraints>

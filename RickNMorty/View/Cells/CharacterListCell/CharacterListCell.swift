@@ -1,15 +1,15 @@
 //
-//  CharacterCell.swift
+//  CharacterListCell.swift
 //  RickNMorty
 //
-//  Created by Fatih Gursoy on 4.07.2022.
+//  Created by Fatih Gursoy on 7.07.2022.
 //
 
 import UIKit
 
-class CharacterCell: UICollectionViewCell {
+class CharacterListCell: UICollectionViewCell {
 
-    static let identifier = "CharacterCell"
+    static let identifier = "CharacterListCell"
     
     @IBOutlet weak private var name: UILabel!
     @IBOutlet weak private var image: UIImageView!
@@ -29,6 +29,5 @@ class CharacterCell: UICollectionViewCell {
         : favButton.setImage(UIImage(systemName: "heart"), for: .normal)
         
     }
-    
-    
+
 }
