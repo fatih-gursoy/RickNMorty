@@ -12,14 +12,24 @@ class HomeVC: UIViewController {
     @IBOutlet private weak var listCollectionView: UICollectionView!
         
     private var viewModel = CharacterListViewModel()
-    private var pageNum: Int = 1
+    var notificationCenter = NotificationCenter.default
+    
+    private var isPageLoading: Bool = false
+    
+    private var pageNum: Int = 1 {
+        didSet {
+            getData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        viewModel.delegate = self
         configureCollectionView()
         getData()
         
+        notificationCenter.addObserver(self, selector: #selector(update), name: NSNotification.Name(rawValue: "RefreshFavorites"), object: nil)
     }
     
     func configureCollectionView() {
@@ -32,10 +42,11 @@ class HomeVC: UIViewController {
     }
     
     func getData() {
-        
-        viewModel.delegate = self
         viewModel.fetchCharacters(pageNum: pageNum)
-        
+    }
+    
+    @objc func update() {
+        getData()
     }
 
 
@@ -64,6 +75,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         
         let width = collectionView.bounds.width * 0.45
         let height = collectionView.bounds.height * 0.45
+
         
         return CGSize(width: width, height: height)
         
@@ -79,15 +91,30 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+        let contentHeight = listCollectionView.contentSize.height
+        let scrollOffset = listCollectionView.contentOffset.y
+
+        if (scrollOffset > contentHeight - listCollectionView.bounds.size.height) && !isPageLoading  {
+            pageNum += 1
+        }
+    }
+    
 }
 
 extension HomeVC: CharacterListDelegate {
     
     func updateUI() {
         
+        isPageLoading = true
+        
         DispatchQueue.main.async {
             self.listCollectionView.reloadData()
+            self.isPageLoading = false
         }
+        
+        
     }
     
     

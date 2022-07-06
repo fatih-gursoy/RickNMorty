@@ -33,11 +33,9 @@ extension CharacterListViewModel {
         service.fetch(endPoint: API.character([.page(pageNum)])) { [weak self] (response: Response) in
             
             guard let characters = response.results else { return }
-            self?.characters = characters
+            self?.characters.append(contentsOf: characters)
             self?.delegate?.updateUI()
-            
         }
     }
-    
-    
+
 }

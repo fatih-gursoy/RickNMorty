@@ -15,6 +15,7 @@ class CharacterCell: UICollectionViewCell {
     @IBOutlet weak private var image: UIImageView!
     @IBOutlet weak private var species: UILabel!
     @IBOutlet weak private var status: UILabel!
+    @IBOutlet weak private var favButton: UIButton!
     
     func configureCell(viewModel: CharacterViewModel) {
         
@@ -22,6 +23,10 @@ class CharacterCell: UICollectionViewCell {
         status.text = viewModel.status
         species.text = viewModel.species
         image.setImage(url: viewModel.image)
+        
+        viewModel.isSaved
+        ? favButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        : favButton.setImage(UIImage(systemName: "heart"), for: .normal)
         
     }
     

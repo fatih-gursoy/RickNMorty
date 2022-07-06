@@ -21,49 +21,55 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4O-Kt-Iyo" customClass="CustomView" customModule="RickNMorty" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="281" height="352"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UAk-Kb-iHc">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UAk-Kb-iHc">
                                 <rect key="frame" x="10" y="10" width="261" height="332"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H3C-DY-RjE">
-                                        <rect key="frame" x="0.0" y="0.0" width="261" height="26.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cyz-uh-hen">
-                                        <rect key="frame" x="10" y="36.5" width="241.5" height="241.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="30W-IL-XGi">
+                                        <rect key="frame" x="0.0" y="0.0" width="261" height="278"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H3C-DY-RjE">
+                                                <rect key="frame" x="0.0" y="0.0" width="261" height="45.5"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cyz-uh-hen">
+                                                <rect key="frame" x="0.0" y="55.5" width="261" height="222.5"/>
+                                            </imageView>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="cyz-uh-hen" secondAttribute="height" multiplier="1:1" id="u3q-et-rwj"/>
+                                            <constraint firstItem="cyz-uh-hen" firstAttribute="height" secondItem="30W-IL-XGi" secondAttribute="height" multiplier="0.8" id="hXi-QS-GM0"/>
                                         </constraints>
-                                    </imageView>
+                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BSk-ru-3JC">
-                                        <rect key="frame" x="10" y="288" width="241" height="44"/>
+                                        <rect key="frame" x="0.0" y="288" width="261" height="44"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ehW-Iy-Kaj">
-                                                <rect key="frame" x="0.0" y="0.0" width="201" height="44"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="221" height="44"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Species" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vp-fo-Xaz">
-                                                        <rect key="frame" x="0.0" y="0.0" width="201" height="17"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="221" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7F5-kE-leE">
-                                                        <rect key="frame" x="0.0" y="27" width="201" height="17"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <rect key="frame" x="0.0" y="27" width="221" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNC-ZW-rOZ">
-                                                <rect key="frame" x="211" y="7" width="30" height="30"/>
+                                                <rect key="frame" x="231" y="7" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="CJX-aJ-hyZ"/>
                                                     <constraint firstAttribute="height" constant="30" id="UQS-te-2rU"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain">
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Button">
+                                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <imageReference key="image" image="heart" catalog="system" symbolScale="large" renderingMode="hierarchical-single">
                                                         <hierarchicalColors>
                                                             <color systemColor="systemRedColor"/>
@@ -71,16 +77,26 @@
                                                             <color systemColor="tertiaryLabelColor"/>
                                                         </hierarchicalColors>
                                                     </imageReference>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="heavy"/>
+                                                </state>
+                                                <buttonConfiguration key="configuration" style="plain">
+                                                    <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" weight="heavy"/>
+                                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
                                                 </buttonConfiguration>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="ehW-Iy-Kaj" firstAttribute="leading" secondItem="BSk-ru-3JC" secondAttribute="leading" id="w9g-xX-CfI"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="BSk-ru-3JC" firstAttribute="leading" secondItem="UAk-Kb-iHc" secondAttribute="leading" constant="10" id="OGx-dS-sVk"/>
-                                    <constraint firstAttribute="trailing" secondItem="H3C-DY-RjE" secondAttribute="trailing" id="c18-nI-HbE"/>
-                                    <constraint firstAttribute="trailing" secondItem="BSk-ru-3JC" secondAttribute="trailing" constant="10" id="qHf-3P-Rbp"/>
-                                    <constraint firstItem="H3C-DY-RjE" firstAttribute="leading" secondItem="UAk-Kb-iHc" secondAttribute="leading" id="tKs-Mr-NxV"/>
+                                    <constraint firstAttribute="trailing" secondItem="BSk-ru-3JC" secondAttribute="trailing" id="Bnu-dH-cC6"/>
+                                    <constraint firstItem="BSk-ru-3JC" firstAttribute="leading" secondItem="UAk-Kb-iHc" secondAttribute="leading" id="GqG-Yx-jEb"/>
+                                    <constraint firstAttribute="trailing" secondItem="30W-IL-XGi" secondAttribute="trailing" id="JeZ-9A-uHZ"/>
+                                    <constraint firstItem="30W-IL-XGi" firstAttribute="leading" secondItem="UAk-Kb-iHc" secondAttribute="leading" id="fMq-BB-rY2"/>
+                                    <constraint firstItem="30W-IL-XGi" firstAttribute="height" secondItem="UAk-Kb-iHc" secondAttribute="height" multiplier="0.837349" id="hNM-Uv-cAg"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -109,6 +125,7 @@
             </constraints>
             <size key="customSize" width="281" height="352"/>
             <connections>
+                <outlet property="favButton" destination="HNC-ZW-rOZ" id="cwB-wQ-52a"/>
                 <outlet property="image" destination="cyz-uh-hen" id="BK7-ZQ-VwL"/>
                 <outlet property="name" destination="H3C-DY-RjE" id="tew-gK-k4X"/>
                 <outlet property="species" destination="7vp-fo-Xaz" id="F3G-xT-LOr"/>
