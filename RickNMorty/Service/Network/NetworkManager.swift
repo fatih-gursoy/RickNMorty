@@ -30,7 +30,6 @@ class NetworkManager: NetworkManagerProtocol {
             
             guard let result = response.value else {return}
             completion(result)
-            
         }
     }
     

@@ -58,29 +58,25 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KbN-qu-oLP">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ztx-G5-AVM">
                                         <rect key="frame" x="418" y="53" width="30" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="5Bc-k2-dRw"/>
-                                            <constraint firstAttribute="width" constant="30" id="gpz-bX-IYY"/>
+                                            <constraint firstAttribute="width" constant="30" id="OeP-W2-lFi"/>
+                                            <constraint firstAttribute="height" constant="30" id="Weq-aK-QN4"/>
                                         </constraints>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Button">
-                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <imageReference key="image" image="heart" catalog="system" symbolScale="large" renderingMode="hierarchical-single">
-                                                <hierarchicalColors>
-                                                    <color systemColor="systemRedColor"/>
-                                                    <color systemColor="secondaryLabelColor"/>
-                                                    <color systemColor="tertiaryLabelColor"/>
-                                                </hierarchicalColors>
-                                            </imageReference>
+                                        <state key="normal">
+                                            <color key="titleColor" systemColor="systemRedColor"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <imageReference key="image" image="heart" catalog="system"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="heavy"/>
                                         </state>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" weight="heavy"/>
-                                            <color key="baseForegroundColor" systemColor="systemRedColor"/>
-                                        </buttonConfiguration>
+                                        <state key="selected" image="heart.fill" catalog="system">
+                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -114,7 +110,7 @@
             </constraints>
             <size key="customSize" width="468" height="156"/>
             <connections>
-                <outlet property="favButton" destination="KbN-qu-oLP" id="4I7-00-rRq"/>
+                <outlet property="favButton" destination="ztx-G5-AVM" id="0AI-2f-wM9"/>
                 <outlet property="image" destination="mP7-RF-y5e" id="o6f-EG-wy0"/>
                 <outlet property="name" destination="chp-b1-SYs" id="ljb-jM-Cnr"/>
                 <outlet property="species" destination="g8j-bV-bDI" id="u4r-Gw-6eX"/>
@@ -125,17 +121,12 @@
     </objects>
     <resources>
         <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

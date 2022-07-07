@@ -41,7 +41,7 @@ class CharacterViewModel {
     }
     
     var species: String? {
-        return character.species?.rawValue
+        return character.species
     }
     
     var gender: String? {

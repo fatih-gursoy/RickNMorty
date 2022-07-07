@@ -24,13 +24,6 @@ class HomeVC: UIViewController {
         }
     }
     
-    private var isPageLoading: Bool = false
-    private var pageNum: Int = 1 {
-        didSet {
-            getData()
-        }
-    }
-    
     let changeViewButton = UIButton()
     
     override func viewDidLoad() {
@@ -38,6 +31,7 @@ class HomeVC: UIViewController {
         
         listCollectionView.delegate = self
         listCollectionView.dataSource = self
+        searchBar.delegate = self
         
         viewModel.delegate = self
         
@@ -48,12 +42,16 @@ class HomeVC: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(update), name: NSNotification.Name(rawValue: "RefreshFavorites"), object: nil)
     }
     
+    deinit {
+        notificationCenter.removeObserver(self)
+    }
+    
     func getData() {
-        viewModel.fetchCharacters(pageNum: pageNum)
+        viewModel.fetchCharacters()
     }
     
     @objc func update() {
-        getData()
+        listCollectionView.reloadData()
     }
     
     func configureNavBar() {
@@ -152,8 +150,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         let contentHeight = listCollectionView.contentSize.height
         let scrollOffset = listCollectionView.contentOffset.y
         
-        if (scrollOffset > contentHeight - listCollectionView.bounds.size.height) && !isPageLoading  {
-            pageNum += 1
+        if (scrollOffset > contentHeight - listCollectionView.bounds.size.height - 200) {
+            getData()
         }
     }
     
@@ -163,8 +161,10 @@ extension HomeVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        viewModel.filterByName(pageNum: 1, name: searchText)
-        
+        viewModel.isFiltered = true
+        viewModel.filterName = searchText
+        viewModel.fetchCharacters()
+
     }
     
 }
@@ -183,9 +183,15 @@ extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
         
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
         
-        toolBar.barStyle = .black
-        toolBar.items = [UIBarButtonItem.init(title: "Filter", style: .done, target: self, action: #selector(doneButtonTapped))]
+        toolBar.barStyle = .default
         
+        let clearButton = UIBarButtonItem(title:"Clear", style: .plain, target: self, action: #selector(clearButtonTapped))
+        
+        let spaceItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let confirmButton = UIBarButtonItem.init(title: "Confirm", style: .plain, target: self, action: #selector(doneButtonTapped))
+        
+        toolBar.setItems([clearButton, spaceItem, confirmButton], animated: true)
         toolBar.sizeToFit()
         
         UIView.transition(with: self.view, duration: 0.5, options: [.transitionCrossDissolve] , animations: {
@@ -197,10 +203,31 @@ extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     @objc func doneButtonTapped() {
         
-        viewModel.filterByStatus(pageNum: 1, status: "Alive")
+        viewModel.isFiltered = true
+        viewModel.fetchCharacters()
+        scrollTop()
+        
         pickerView.removeFromSuperview()
         toolBar.removeFromSuperview()
         
+    }
+    
+    @objc func clearButtonTapped() {
+        
+        viewModel.isFiltered = false
+        viewModel.filterStatus = ""
+        viewModel.fetchCharacters()
+        scrollTop()
+        
+        pickerView.removeFromSuperview()
+        toolBar.removeFromSuperview()
+        
+    }
+    
+    func scrollTop() {
+        self.listCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0),
+                                             at: .top, animated: true)
+
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -218,8 +245,7 @@ extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        viewModel.filterByStatus(pageNum: 1, status: Status.allCases[row].rawValue)
-        
+        viewModel.filterStatus = Status.allCases[row].rawValue
     }
     
 }
@@ -229,11 +255,8 @@ extension HomeVC: CharacterListDelegate {
     
     func updateUI() {
         
-        isPageLoading = true
-        
         DispatchQueue.main.async {
             self.listCollectionView.reloadData()
-            self.isPageLoading = false
         }
     }
 }

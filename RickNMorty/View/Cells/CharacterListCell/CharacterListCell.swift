@@ -23,11 +23,8 @@ class CharacterListCell: UICollectionViewCell {
         status.text = viewModel.status
         species.text = viewModel.species
         image.setImage(url: viewModel.image)
-        
-        viewModel.isSaved
-        ? favButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        : favButton.setImage(UIImage(systemName: "heart"), for: .normal)
-        
+        favButton.isSelected = viewModel.isSaved
+     
     }
 
 }

@@ -15,7 +15,6 @@ protocol CharacterListDelegate: AnyObject {
 class CharacterListViewModel {
     
     private let service: NetworkManagerProtocol
-    
     weak var delegate: CharacterListDelegate?
     
     init(service: NetworkManager = NetworkManager.shared) {
@@ -23,41 +22,51 @@ class CharacterListViewModel {
     }
     
     var characters: [Character] = []
+    var isPageLoading: Bool = false
+    var isLastPage: Bool = false
+    
+    var currentPage: Int = 1
+    var filterName = ""
+    var filterStatus = ""
+    
+    var isFiltered: Bool = false {
+        didSet {
+            currentPage = 1
+            isLastPage = false
+            isPageLoading = false
+        }
+    }
     
 }
 
 extension CharacterListViewModel {
     
-    func fetchCharacters(pageNum: Int) {
+    func fetchCharacters() {
         
-        service.fetch(endPoint: API.character([.page(pageNum)])) { [weak self] (response: Response) in
-            
-            guard let characters = response.results else { return }
-            self?.characters.append(contentsOf: characters)
-            self?.delegate?.updateUI()
-        }
+        guard !isPageLoading && !isLastPage else {return}
+        isPageLoading = true
+        
+        service.fetch(endPoint: API.character(
+            [.page(currentPage),
+             .name(filterName),
+             .status(filterStatus)])) { [weak self] (response: Response) in
+                 
+                 guard let self = self,
+                       let characters = response.results else { return }
+                 
+                 if self.currentPage == 1 { self.characters.removeAll(keepingCapacity: false) }
+                 self.characters.append(contentsOf: characters)
+                 self.delegate?.updateUI()
+                 
+                 self.isPageLoading = false
+                 self.isFiltered = false
+                 
+                 guard let pageCount = response.info?.pages else { return }
+                 guard self.currentPage <= pageCount else {
+                     self.isLastPage = true
+                     return }
+                 self.currentPage += 1
+             }
     }
     
-    func filterByName(pageNum: Int, name: String) {
-        
-        service.fetch(endPoint: API.character([.page(pageNum), .name(name)])) { [weak self] (response: Response) in
-            
-            guard let characters = response.results else { return }
-            self?.characters.append(contentsOf: characters)
-            self?.delegate?.updateUI()
-        }
-    }
-    
-    func filterByStatus(pageNum: Int, status: String) {
-        
-        service.fetch(endPoint: API.character([.page(pageNum), .status(status)])) { [weak self] (response: Response) in
-            
-            guard let characters = response.results else { return }
-            self?.characters.removeAll(keepingCapacity: false)
-            self?.characters = characters
-            self?.delegate?.updateUI()
-        }
-    }
-
-
 }

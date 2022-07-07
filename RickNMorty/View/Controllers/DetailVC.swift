@@ -20,7 +20,7 @@ class DetailVC: UIViewController {
     @IBOutlet private weak var lastSeenEpisode: UILabel!
     @IBOutlet private weak var favButton: CustomButton!
     
-    var notificationCenter = NotificationCenter.default
+    private var notificationCenter = NotificationCenter.default
     var viewModel : CharacterViewModel?
     
     override func viewDidLoad() {
@@ -29,8 +29,6 @@ class DetailVC: UIViewController {
         configureUI()
         
     }
-    
-
     
     func configureUI() {
         
