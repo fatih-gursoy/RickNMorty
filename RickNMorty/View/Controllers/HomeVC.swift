@@ -164,6 +164,7 @@ extension HomeVC: UISearchBarDelegate {
         viewModel.isFiltered = true
         viewModel.filterName = searchText
         viewModel.fetchCharacters()
+        scrollTop()
 
     }
     
