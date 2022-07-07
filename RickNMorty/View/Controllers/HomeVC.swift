@@ -189,7 +189,7 @@ extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
         
         let spaceItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        let confirmButton = UIBarButtonItem.init(title: "Confirm", style: .plain, target: self, action: #selector(doneButtonTapped))
+        let confirmButton = UIBarButtonItem.init(title: "Confirm", style: .plain, target: self, action: #selector(confirmButtonTapped))
         
         toolBar.setItems([clearButton, spaceItem, confirmButton], animated: true)
         toolBar.sizeToFit()
@@ -201,7 +201,7 @@ extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
 
     }
     
-    @objc func doneButtonTapped() {
+    @objc func confirmButtonTapped() {
         
         viewModel.isFiltered = true
         viewModel.fetchCharacters()
