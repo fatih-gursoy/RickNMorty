@@ -17,7 +17,7 @@ class CharacterListViewModel {
     private let service: NetworkManagerProtocol
     weak var delegate: CharacterListDelegate?
     
-    init(service: NetworkManager = NetworkManager.shared) {
+    init(service: NetworkManagerProtocol = NetworkManager.shared) {
         self.service = service
     }
     
