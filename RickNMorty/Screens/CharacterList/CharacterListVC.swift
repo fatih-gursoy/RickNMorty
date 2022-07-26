@@ -23,7 +23,7 @@ class CharacterListVC: UIViewController {
             configureCollectionView(with: self.cellName)
         }
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -21,36 +21,22 @@ class CharacterDetailVC: UIViewController {
     @IBOutlet private weak var favButton: CustomButton!
     
     private var viewModel: CharacterDetailViewModel
-    
-    weak var delegate: CharacterListViewModelDelegate?
+    weak var updateListDelegate: CharacterListViewModelDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
         viewModel.fetchLastEpisode()
-        configureUI()
     }
     
     init?(coder: NSCoder, delegate: CharacterListViewModelDelegate, viewModel: CharacterDetailViewModel) {
         self.viewModel = viewModel
-        self.delegate = delegate
+        self.updateListDelegate = delegate
         super.init(coder: coder)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureUI() {
-        name.text = viewModel.name
-        image.setImage(url: viewModel.image)
-        status.text = viewModel.status
-        species.text = viewModel.species
-        numberofEpisodes.text = viewModel.numberofEpisodes
-        gender.text = viewModel.gender
-        originName.text = viewModel.originName
-        locationName.text = viewModel.locationName
-        favButton.isSelected = viewModel.isSaved
     }
 
     @IBAction func favButtonTapped(_ sender: Any) {
@@ -64,7 +50,7 @@ class CharacterDetailVC: UIViewController {
         case false:
             viewModel.addToFavorites(charID)
         }
-        delegate?.updateUI()
+        updateListDelegate?.updateUI()
     }
     
 }
@@ -73,11 +59,19 @@ extension CharacterDetailVC: CharacterDetailViewModelDelegate {
     
     func updateUI() {
         
+        name.text = viewModel.name
+        image.setImage(url: viewModel.image)
+        status.text = viewModel.status
+        species.text = viewModel.species
+        numberofEpisodes.text = viewModel.numberofEpisodes
+        gender.text = viewModel.gender
+        originName.text = viewModel.originName
+        locationName.text = viewModel.locationName
+        favButton.isSelected = viewModel.isSaved
+        
         DispatchQueue.main.async { [weak self] in
-            
             guard let lastEpisode = self?.viewModel.lastSeenEpisodeName,
                   let lastEpisodeDate = self?.viewModel.lastEpisodeAirDate else {return}
-            
             self?.lastSeenEpisode.text = lastEpisode + ": " + lastEpisodeDate
         }
     }

@@ -13,7 +13,7 @@ class CharacterDetailBuilder {
         
         let detailVC = UIStoryboard(name: "Main",
                                     bundle: nil).instantiateViewController(identifier: "DetailVC", creator: { coder in
-            return CharacterDetailVC(coder: coder, delegate: delegate ,viewModel: viewModel) })
+            return CharacterDetailVC(coder: coder, delegate: delegate, viewModel: viewModel) })
         
         return detailVC
     }
