@@ -1,15 +1,15 @@
 //
-//  CharacterListCell.swift
+//  CharacterCell.swift
 //  RickNMorty
 //
-//  Created by Fatih Gursoy on 7.07.2022.
+//  Created by Fatih Gursoy on 4.07.2022.
 //
 
 import UIKit
 
-class CharacterListCell: UICollectionViewCell {
+class CharacterGridCell: UICollectionViewCell {
 
-    static let identifier = "CharacterListCell"
+    static let identifier = "CharacterGridCell"
     
     @IBOutlet weak private var name: UILabel!
     @IBOutlet weak private var image: UIImageView!
@@ -17,14 +17,16 @@ class CharacterListCell: UICollectionViewCell {
     @IBOutlet weak private var status: UILabel!
     @IBOutlet weak private var favButton: UIButton!
     
-    func configureCell(viewModel: CharacterViewModel) {
+    
+    func configureCell(viewModel: CharacterDetailViewModel) {
         
         name.text = viewModel.name
         status.text = viewModel.status
         species.text = viewModel.species
         image.setImage(url: viewModel.image)
         favButton.isSelected = viewModel.isSaved
-     
+        
     }
-
+    
+    
 }

@@ -7,25 +7,24 @@
 
 import Foundation
 
-protocol CharacterListDelegate: AnyObject {
-    
+protocol CharacterListViewModelDelegate: AnyObject {
     func updateUI()
 }
 
 class CharacterListViewModel {
     
     private let service: NetworkManagerProtocol
-    weak var delegate: CharacterListDelegate?
+    weak var delegate: CharacterListViewModelDelegate?
     
     init(service: NetworkManagerProtocol = NetworkManager.shared) {
         self.service = service
     }
     
-    var characters: [Character] = []
-    var isPageLoading: Bool = false
-    var isLastPage: Bool = false
+    private var isPageLoading: Bool = false
+    private var isLastPage: Bool = false
+    private var currentPage: Int = 1
     
-    var currentPage: Int = 1
+    var characters: [Character] = []
     var filterName = ""
     var filterStatus = ""
     

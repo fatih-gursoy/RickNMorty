@@ -7,21 +7,22 @@
 
 import Foundation
 
-protocol CharacterViewModelDelegate: AnyObject {
+protocol CharacterDetailViewModelDelegate: AnyObject {
     func updateUI()
 }
 
-class CharacterViewModel {
+class CharacterDetailViewModel {
     
     private let character: Character
-    weak var delegate: CharacterViewModelDelegate?
-    
     private var coreDataManager = CoreDataManager.shared
+    
+    weak var delegate: CharacterDetailViewModelDelegate?
     
     init(character: Character) {
         self.character = character
-        fetchLastEpisode()
     }
+    
+//MARK: - Properties
     
     var name: String? {
         return character.name
@@ -49,7 +50,6 @@ class CharacterViewModel {
     }
     
     var numberofEpisodes: String {
-        
         guard let count = character.episode?.count else {return "0"}
         return String(describing: count)
     }
@@ -70,33 +70,25 @@ class CharacterViewModel {
         return isSaved != nil
     }
     
-//MARK: Functions
+// MARK: - Functions
     
-    private func fetchLastEpisode() {
+    func fetchLastEpisode() {
     
-        guard let urlString = character.episode?.last,
-              let url = URL(string: urlString) else { return }
-        
-        NetworkManager.shared.fetchByURL(url: url) { [weak self] (result: Episode) in
-            
+        guard let episodeNum = character.episode?.last?.split(separator: "/").last else {return}
+        let num = String(episodeNum)
+
+        NetworkManager.shared.fetch(endPoint: API.episode(num)) { [weak self] (result: Episode) in
             self?.lastSeenEpisodeName = result.name
             self?.lastEpisodeAirDate = result.airDate
             self?.delegate?.updateUI()
-            
         }
     }
     
     func addToFavorites(_ id: String) {
-        
         coreDataManager.addToFavorites(id)
-        
     }
 
     func deleteFromFavorites(_ id: String){
-        
         coreDataManager.deleteRecipe(id)
-        
     }
-    
-    
 }

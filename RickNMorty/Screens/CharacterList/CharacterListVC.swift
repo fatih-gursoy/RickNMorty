@@ -7,15 +7,15 @@
 
 import UIKit
 
-class HomeVC: UIViewController {
+class CharacterListVC: UIViewController {
     
     @IBOutlet private weak var listCollectionView: UICollectionView!
     @IBOutlet private weak var searchBar: UISearchBar!
     
-    private var notificationCenter = NotificationCenter.default
-    private var viewModel = CharacterListViewModel()
+    private var viewModel: CharacterListViewModel
     private var pickerView = UIPickerView()
     private var toolBar = UIToolbar()
+    private let changeViewButton = UIButton()
     
     private var isListView: Bool = false
     private var cellName = CharacterGridCell.identifier {
@@ -24,34 +24,32 @@ class HomeVC: UIViewController {
         }
     }
     
-    let changeViewButton = UIButton()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         listCollectionView.delegate = self
         listCollectionView.dataSource = self
         searchBar.delegate = self
-        
         viewModel.delegate = self
         
         configureCollectionView(with: cellName)
         configureNavBar()
-        getData()
-        
-        notificationCenter.addObserver(self, selector: #selector(update), name: NSNotification.Name(rawValue: "RefreshFavorites"), object: nil)
+        fetchData()
     }
     
-    deinit {
-        notificationCenter.removeObserver(self)
+    init?(coder: NSCoder, viewModel: CharacterListViewModel) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
     }
     
-    func getData() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+// MARK: - Functions
+    
+    func fetchData() {
         viewModel.fetchCharacters()
-    }
-    
-    @objc func update() {
-        listCollectionView.reloadData()
     }
     
     func configureNavBar() {
@@ -88,17 +86,17 @@ class HomeVC: UIViewController {
     
 }
 
-extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+// MARK: - CollectionView
+
+extension CharacterListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return viewModel.characters.count
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let characterVM = CharacterViewModel(character: viewModel.characters[indexPath.row])
+        let characterVM = CharacterDetailViewModel(character: viewModel.characters[indexPath.row])
         
         switch isListView {
             
@@ -136,13 +134,10 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        guard let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else {fatalError("Couldn't load") }
-        
-        let characterVM = CharacterViewModel(character: viewModel.characters[indexPath.row])
-        detailVC.viewModel = characterVM
+                
+        let characterVM = CharacterDetailViewModel(character: viewModel.characters[indexPath.row])
+        let detailVC = CharacterDetailBuilder.build(viewModel: characterVM, delegate: self)
         self.navigationController?.pushViewController(detailVC, animated: true)
-        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -151,13 +146,15 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         let scrollOffset = listCollectionView.contentOffset.y
         
         if (scrollOffset > contentHeight - listCollectionView.bounds.size.height - 200) {
-            getData()
+            fetchData()
         }
     }
     
 }
 
-extension HomeVC: UISearchBarDelegate {
+//MARK: - Search Bar Delegate
+
+extension CharacterListVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
@@ -165,12 +162,12 @@ extension HomeVC: UISearchBarDelegate {
         viewModel.filterName = searchText
         viewModel.fetchCharacters()
         scrollTop()
-
+        
     }
     
 }
 
-extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
+extension CharacterListVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     @objc func configurePickerView() {
         
@@ -199,7 +196,7 @@ extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
             self.view.addSubview(self.pickerView)
             self.view.addSubview(self.toolBar)
         })
-
+        
     }
     
     @objc func confirmButtonTapped() {
@@ -228,7 +225,6 @@ extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     func scrollTop() {
         self.listCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0),
                                              at: .top, animated: true)
-
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -245,17 +241,16 @@ extension HomeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
         viewModel.filterStatus = Status.allCases[row].rawValue
     }
     
 }
 
+//MARK: - ViewModel Delegate
 
-extension HomeVC: CharacterListDelegate {
+extension CharacterListVC: CharacterListViewModelDelegate {
     
     func updateUI() {
-        
         DispatchQueue.main.async {
             self.listCollectionView.reloadData()
         }

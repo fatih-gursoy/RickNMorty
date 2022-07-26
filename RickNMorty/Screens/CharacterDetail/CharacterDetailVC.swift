@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailVC: UIViewController {
+class CharacterDetailVC: UIViewController {
 
     @IBOutlet private weak var image: CustomImageView!
     @IBOutlet private weak var name: UILabel!
@@ -20,22 +20,28 @@ class DetailVC: UIViewController {
     @IBOutlet private weak var lastSeenEpisode: UILabel!
     @IBOutlet private weak var favButton: CustomButton!
     
-    private var notificationCenter = NotificationCenter.default
-    var viewModel : CharacterViewModel?
+    private var viewModel: CharacterDetailViewModel
+    
+    weak var delegate: CharacterListViewModelDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel.delegate = self
+        viewModel.fetchLastEpisode()
         configureUI()
-        
+    }
+    
+    init?(coder: NSCoder, delegate: CharacterListViewModelDelegate, viewModel: CharacterDetailViewModel) {
+        self.viewModel = viewModel
+        self.delegate = delegate
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func configureUI() {
-        
-        guard let viewModel = viewModel else {return}
-        
-        viewModel.delegate = self
-
         name.text = viewModel.name
         image.setImage(url: viewModel.image)
         status.text = viewModel.status
@@ -45,42 +51,34 @@ class DetailVC: UIViewController {
         originName.text = viewModel.originName
         locationName.text = viewModel.locationName
         favButton.isSelected = viewModel.isSaved
-
     }
 
     @IBAction func favButtonTapped(_ sender: Any) {
         
-        guard let viewModel = viewModel,
-              let charID = viewModel.charID else {return}
-        
+        guard let charID = viewModel.charID else {return}
         favButton.isSelected.toggle()
         
         switch viewModel.isSaved {
-            
         case true:
             viewModel.deleteFromFavorites(charID)
-            
         case false:
             viewModel.addToFavorites(charID)
         }
-        
-        notificationCenter.post(name: NSNotification.Name(rawValue: "RefreshFavorites"), object: nil)
+        delegate?.updateUI()
     }
     
 }
 
-extension DetailVC: CharacterViewModelDelegate {
+extension CharacterDetailVC: CharacterDetailViewModelDelegate {
     
     func updateUI() {
         
         DispatchQueue.main.async { [weak self] in
             
-            guard let lastEpisode = self?.viewModel?.lastSeenEpisodeName,
-                  let lastEpisodeDate = self?.viewModel?.lastEpisodeAirDate else {return}
+            guard let lastEpisode = self?.viewModel.lastSeenEpisodeName,
+                  let lastEpisodeDate = self?.viewModel.lastEpisodeAirDate else {return}
             
             self?.lastSeenEpisode.text = lastEpisode + ": " + lastEpisodeDate
-            
         }
-        
     }
 }
